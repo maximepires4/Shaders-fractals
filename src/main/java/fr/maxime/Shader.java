@@ -7,11 +7,12 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL40.glUniform1d;
 
 public class Shader {
-    private int program;
-    private int vs;
-    private int fs;
+    private final int program;
+    private final int vs;
+    private final int fs;
 
     public Shader(String filename){
         program = glCreateProgram();
@@ -39,7 +40,7 @@ public class Shader {
         glAttachShader(program, vs);
         glAttachShader(program, fs);
 
-        //glBindAttribLocation(program, 0, "vertices");
+        glBindAttribLocation(program, 0, "vertices");
 
         glLinkProgram(program);
         if(glGetProgrami(program, GL_LINK_STATUS) != 1){
@@ -59,6 +60,13 @@ public class Shader {
         }
     }
 
+    public void setUniformd(String name, double value){
+        int location = glGetUniformLocation(program, name);
+        if(location != -1){
+            glUniform1d(location, value);
+        }
+    }
+
     public void setUniformf(String name, float value){
         int location = glGetUniformLocation(program, name);
         if(location != -1){
@@ -66,7 +74,7 @@ public class Shader {
         }
     }
 
-    public void setUniform1fv(String name, float[] value){
+    public void setUniformfv(String name, float[] value){
         int location = glGetUniformLocation(program, name);
         if(location != -1){
             glUniform1fv(location, value);

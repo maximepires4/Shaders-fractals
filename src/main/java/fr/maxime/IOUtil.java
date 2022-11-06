@@ -1,6 +1,6 @@
 /**
- * Ce fichier ne m'appartient pas
- * Je l'ai trouvé à l'adresse suivante : https://github.com/LWJGL/lwjgl3/tree/master/modules/samples/src/test/java/org/lwjgl/demo/stb
+ * This file doesn't belong to me (Maxime Pires)
+ * https://github.com/LWJGL/lwjgl3/tree/master/modules/samples/src/test/java/org/lwjgl/demo/stb
  */
 
 package fr.maxime;
