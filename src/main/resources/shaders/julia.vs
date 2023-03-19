@@ -1,4 +1,6 @@
-#version 330
+#version 410
+
+precision highp float;
 
 in vec3 vertices;
 

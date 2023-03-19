@@ -24,25 +24,6 @@ int julia(dvec2 z){
     return i;
 }
 
-vec3 hsv2rgb(vec3 c){
-    vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
-    vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
-    return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
-}
-
-int mandelbrot(dvec2 coord){
-    dvec2 z = dvec2(0,0);
-    dvec2 c = dvec2(1.5f * (coord.x - width/2) / (0.5 * zoom * width) + moveX, (coord.y - height/2) / (0.5 * zoom * height) + moveY);
-    int i = maxIter;
-
-    while(z.x * z.x + z.y * z.y < 4 && i > 0){
-        z = dvec2(z.x * z.x - z.y * z.y, 2 * z.x * z.y) + c;
-        i--;
-    }
-
-    return i;
-}
-
 vec3 get_color(float iterations){
     if(iterations == 0) return vec3(0,0,0);
 
@@ -65,12 +46,10 @@ vec3 get_color(float iterations){
 	return color;
 }
 
-
 void main() {
-    int iter = mandelbrot(dvec2(gl_FragCoord.x, gl_FragCoord.y));
+    int iter = julia(dvec2(gl_FragCoord.x, gl_FragCoord.y));
+
     vec3 c = get_color(iter);
+
     gl_FragColor = vec4(c.x, c.y, c.z, 1.0f);
-    //vec3 c = hsv2rgb(vec3(mod(float(maxIter)/float(iter),1), 1.0f, iter == 0 ? 0.0f : 1.0f));
-    //vec3 c = hsv2rgb(vec3(mod(float(maxIter)/float(iter),1), 1.0f, iter/maxIter));
-    //gl_FragColor = vec4(c.x, c.y, c.z, 1.0f);
 }
